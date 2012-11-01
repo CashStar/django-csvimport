@@ -189,7 +189,8 @@ class Command(LabelCommand):
                 else:
                     column = int(column)-1
 
-                row[column] = row[column].strip()
+                if isinstance(row[column], str):
+                    row[column] = row[column].strip()
                 
                 if foreignkey:
                     row[column] = self.insert_fkey(foreignkey, row[column])
