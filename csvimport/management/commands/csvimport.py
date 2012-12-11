@@ -204,7 +204,7 @@ class Command(LabelCommand):
                         row[column] = 0
                     else:
                         try:
-                            row[column] = float(row[column])
+                            row[column] = row[column]
                         except:
                             self.loglist.append('Column %s = %s is not a number so is set to 0' \
                                                 % (field, row[column]))
