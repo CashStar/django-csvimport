@@ -195,33 +195,15 @@ class Command(LabelCommand):
                 if foreignkey:
                     row[column] = self.insert_fkey(foreignkey, row[column])
 
-                if self.debug:
-                    self.loglist.append('%s.%s = "%s"' % (self.model.__name__, 
+                
+                self.loglist.append('%s.%s = "%s"' % (self.model.__name__, 
                                                           field, row[column]))
                 # Tidy up numeric data    
                 if field_type in NUMERIC:
+                    print "numberic"
                     if not row[column]:
                         row[column] = 0
-                    else:
-                        try:
-                            row[column] = row[column]
-                        except:
-                            self.loglist.append('Column %s = %s is not a number so is set to 0' \
-                                                % (field, row[column]))
-                            row[column] = 0
-                    if field_type in INTEGER:
-                        if row[column] > 9223372036854775807:
-                            self.loglist.append('Column %s = %s more than the max integer 9223372036854775807' \
-                                                % (field, row[column]))
-                        if str(row[column]).lower() in ('nan', 'inf', '+inf', '-inf'):
-                            self.loglist.append('Column %s = %s is not an integer so is set to 0' \
-                                                % (field, row[column]))
-                            row[column] = 0
-                        row[column] = int(row[column])
-                        if row[column] < 0 and field_type.startswith('Positive'):
-                            self.loglist.append('Column %s = %s, less than zero so set to 0' \
-                                                % (field, row[column]))
-                            row[column] = 0
+                    
                 try:
                     model_instance.__setattr__(field, row[column])
                 except:
